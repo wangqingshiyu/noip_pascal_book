@@ -1,0 +1,35 @@
+program L3_6;
+var dx,dy,mx,my,i,j:integer;
+    sum:array[0..100,0..100]of int64;
+    pd:array[0..100,0..100]of boolean;
+begin
+     readln(dx,dy);//目标
+     readln(mx,my);//马的坐标
+     fillchar(sum,sizeof(sum),0);
+     fillchar(pd,sizeof(pd),true); //初始化
+                       //设置马的8个p点
+     pd[mx-1,my-2]:=false;     //p5
+     pd[mx-2,my-1]:=false;     //p6
+     pd[mx-2,my+1]:=false;     //p7
+     pd[mx-1,my+2]:=false;     //p8
+     pd[mx+1,my-2]:=false;     //p4
+     pd[mx+2,my-1]:=false;     //p3
+     pd[mx+2,my+1]:=false;     //p2
+     pd[mx+1,my+2]:=false;     //p1
+     pd[mx,my]:=false;         //c点
+
+     sum[0,0]:=1;
+     for i:=1 to dx do         //第一行
+         if pd[i,0]=true then sum[i,0]:=sum[i-1,0]
+         else sum[i,0]:=0;
+     for j:=1 to dy do        //第一列
+         if pd[0,j]=true then sum[0,j]:=sum[0,j-1]
+         else sum[j,0]:=0;
+     for i:=1 to dx do        //内部统计
+         for j:=1 to dy do
+             if pd[i,j]=true then sum[i,j]:=sum[i-1,j]+sum[i,j-1]
+             else sum[i,j]:=0;
+
+     writeln(sum[dx,dy]);
+     readln;
+end.

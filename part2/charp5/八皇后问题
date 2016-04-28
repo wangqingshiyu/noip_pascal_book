@@ -1,0 +1,57 @@
+program HuangHou;  //八皇后问题 测试代码1
+var a:array[0..20,0..20]of boolean;
+    dx,dy:array[0..20] of integer;
+    count,n,i:integer;
+
+procedure print;
+var i,j:integer;
+var p:array[0..20,0..20]of char;
+begin
+     inc(count);
+     for i:=1 to n do
+         write(i,' ');
+     writeln;
+     for i:=1 to n do
+         write(dy[i],' ');
+     writeln;
+     writeln('****************');
+     fillchar(p,sizeof(p),'.');
+     for i:=1 to n do
+         p[dx[i],dy[i]]:='o';
+     for i:=1 to n do
+     begin
+         for j:=1 to n do
+              write(p[i,j],' ');
+         writeln;
+     end;
+end;
+
+procedure search(t:integer);
+var i:integer;
+begin
+    if t>n then
+    begin
+         if a[dx[t],dy[t]] then
+         begin
+              print;
+              exit;
+         end;
+    end;
+end;
+
+begin
+     {readln(n); //n皇后
+     fillchar(a,sizeof(a),true);
+     count:=0;
+     search(1);
+     writeln('---------------------');
+     writeln(count); }
+     readln(n);
+     for i:=1 to n do
+         read(dx[i],dy[i]);
+     print;
+
+     readln;
+     readln;
+
+end.

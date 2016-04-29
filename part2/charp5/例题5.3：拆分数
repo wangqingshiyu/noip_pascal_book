@@ -1,0 +1,45 @@
+program L_5_3;
+var n,t:integer;
+    count:longint;
+    a:array[0..10000]of integer;
+
+procedure print(t:integer);
+var i:integer;
+begin
+     inc(count);
+     write(n, '=' );
+     for i:=1 to t-1 do
+         write(a[i],'+');
+     writeln(a[t]);
+end;
+
+procedure search(s,t:longint);
+var i:longint;
+begin
+    if s=0 then   //无法在分解了，即是完成了
+       print(t-1)
+    else begin
+        for i:=1 to s do
+        begin
+            if ((i>=a[t-1]) and(i<=s div 2)) or ((i=s) and (i<>n)) then  // 下一个数要大于前面的数，并且不能超过一半，因为超过一半，就意味着后边的数会小于这个数。
+                                                                         // 另外，可以就一个数，就是剩下的那个数，但这个数不能是一开始的那个数。
+            begin
+                a[t]:=i;                        //保存数据
+                search(s-i,t+1);                //回溯
+            end;
+        end;
+    end;
+end;
+
+
+begin
+    readln(n);
+    repeat  //直到输入0，结束
+          count:=0;
+          a[0]:=1;
+           search(n,1);
+           writeln('-------------------------');
+           writeln('total=',count);
+           readln(n);
+    until n=0;
+end.

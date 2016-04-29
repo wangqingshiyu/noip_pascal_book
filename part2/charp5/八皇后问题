@@ -1,57 +1,41 @@
-program HuangHou;  //八皇后问题 测试代码1
-var a:array[0..20,0..20]of boolean;
-    dx,dy:array[0..20] of integer;
-    count,n,i:integer;
+program bhh;//八皇后
+const maxn=100;
+var a,b,c,d:array[0..maxn,0..maxn]of integer;     //a,b,c分别是横、竖、撇、捺表示状态
+    dx,dy:array[0..maxn]of integer;         //表示坐标
+    n:integer;
 
-procedure print;
+procedure print;                //o表示空格，*表示皇后
 var i,j:integer;
-var p:array[0..20,0..20]of char;
+    ch:array[1..n,1..n] of char;
 begin
-     inc(count);
+     fillchar(ch,sizeof(ch),'o');
      for i:=1 to n do
-         write(i,' ');
-     writeln;
-     for i:=1 to n do
-         write(dy[i],' ');
-     writeln;
-     writeln('****************');
-     fillchar(p,sizeof(p),'.');
-     for i:=1 to n do
-         p[dx[i],dy[i]]:='o';
+         ch[dx[i],dy[i]]='*';
      for i:=1 to n do
      begin
          for j:=1 to n do
-              write(p[i,j],' ');
+           write(ch[i,j],' ');
          writeln;
      end;
 end;
 
-procedure search(t:integer);
-var i:integer;
+procedure search(t,k:integer); //t,表示是第t行，k表示还有k个皇后
+var i,j:integer;
 begin
-    if t>n then
-    begin
-         if a[dx[t],dy[t]] then
+     if k=0 then
+        print
+     else
          begin
-              print;
-              exit;
+              for i:=1 to n do
+              begin
+                   if
+              end;
          end;
-    end;
 end;
 
 begin
-     {readln(n); //n皇后
-     fillchar(a,sizeof(a),true);
-     count:=0;
-     search(1);
-     writeln('---------------------');
-     writeln(count); }
-     readln(n);
-     for i:=1 to n do
-         read(dx[i],dy[i]);
-     print;
-
-     readln;
-     readln;
-
+    readln(n);
+    fillchar(a,sizeof(a),0);  //0表示可以放皇后，1表示有皇后，-1表示不能放皇后
+    search(1,n);
+    readln;
 end.

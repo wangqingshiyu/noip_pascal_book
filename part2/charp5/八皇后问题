@@ -1,41 +1,158 @@
-program bhh;//八皇后
-const maxn=100;
-var a,b,c,d:array[0..maxn,0..maxn]of integer;     //a,b,c分别是横、竖、撇、捺表示状态
-    dx,dy:array[0..maxn]of integer;         //表示坐标
-    n:integer;
+program huanghou;  //8皇后问题
+var n,count:integer;
+    a:array[0..20]of integer;         //表示第几行
+    b1,b2,b3:array[0..20,0..20]of boolean;  //表示|、 /、 \三个方向的可能性
+    c:array[0..20,0..20]of char;
 
-procedure print;                //o表示空格，*表示皇后
+procedure print;
 var i,j:integer;
-    ch:array[1..n,1..n] of char;
 begin
-     fillchar(ch,sizeof(ch),'o');
+     fillchar(c,sizeof(c),'0');
+     inc(count);
      for i:=1 to n do
-         ch[dx[i],dy[i]]='*';
+         write(i,' ');
+     writeln;
+     for i:=1 to n do
+         write(a[i],' ');
+     writeln;
+     writeln('#################');
+     for i:=1 to n do
+       c[i,a[i]]:='*';
      for i:=1 to n do
      begin
          for j:=1 to n do
-           write(ch[i,j],' ');
+             write(c[i,j],' ');
          writeln;
      end;
+     writeln('#################');
 end;
 
-procedure search(t,k:integer); //t,表示是第t行，k表示还有k个皇后
-var i,j:integer;
+procedure search(k:integer);
+var i,j,t,ii,jj:integer;
 begin
-     if k=0 then
-        print
-     else
+    if k>n then    //完成了N个皇后的填充
+    begin
+         print;
+         exit;
+    end;
+    for t:=1 to n do     //1至n列
+    begin
+         j:=t;
+         if b1[k,j] and b2[k,j] and b3[k,j] then
          begin
-              for i:=1 to n do
+              a[k]:=j;  //保存第K个皇后
+
+              for i:=1 to n do   // 该‘|’都不能放了
+                  b1[i,j]:=false;
+
+        {
+              writeln('shu bu neng fang');
+              for ii:=1 to n do
               begin
-                   if
+                   for jj:=1 to n do
+                       write(b1[ii,jj] and b2[ii,jj] and b3[ii,jj],'  ');
+                   writeln;
               end;
+          }
+              i:=k;       //还原定位
+              j:=a[k];    //还原定位
+              while (i<n) and (j>1) do  // ‘/’左下方向不能放
+                 begin
+                      b2[i+1,j-1]:=false;
+                      inc(i);
+                      dec(j);
+                 end;
+           {    //查看T or F
+              writeln('pie bu neng fang');
+              for ii:=1 to n do
+              begin
+                   for jj:=1 to n do
+                       write(b1[ii,jj] and b2[ii,jj] and b3[ii,jj],'  ');
+                   writeln;
+              end;
+             }
+              i:=k;
+              j:=a[k];
+              while (i<n) and (j<n) do // ‘\’ 右下方向不能放
+                 begin
+                       b3[i+1,j+1]:=false;
+                       inc(i);
+                       inc(j);
+                 end;
+            {
+              writeln('na bu neng fang');
+              for ii:=1 to n do
+              begin
+                   for jj:=1 to n do
+                       write(b1[ii,jj] and b2[ii,jj] and b3[ii,jj],'  ');
+                   writeln;
+              end;
+             }
+              search(k+1);    //下一搜索
+
+              i:=k;
+              j:=a[k];
+              for i:=1 to n do   // 回复该‘|’
+                  b1[i,j]:=true;
+
+             {
+              writeln('shu bu neng fang');
+              for ii:=1 to n do
+              begin
+                   for jj:=1 to n do
+                       write(b1[ii,jj] and b2[ii,jj] and b3[ii,jj],'  ');
+                   writeln;
+              end;
+             }
+              i:=k;
+              j:=a[k];
+              while (i<n) and (j>1) do  // 回复‘/’左下方向
+                 begin
+                      b2[i+1,j-1]:=true;
+                      inc(i);
+                      dec(j);
+                 end;
+              {
+              writeln('pie bu neng fang');
+              for ii:=1 to n do
+              begin
+                   for jj:=1 to n do
+                       write(b1[ii,jj] and b2[ii,jj] and b3[ii,jj],'  ');
+                   writeln;
+              end;
+              }
+              i:=k;
+              j:=a[k];
+              while (i<n) and (j<n) do // 回复‘\’ 右下方向
+                 begin
+                       b3[i+1,j+1]:=true;
+                       inc(i);
+                       inc(j);
+                 end;
+             {
+               writeln('na bu neng fang');
+              for i:=ii to n do
+              begin
+                   for jj:=1 to n do
+                       write(b1[ii,jj] and b2[ii,jj] and b3[ii,jj],'  ');
+                   writeln;
+              end;
+              }
          end;
+    end;
 end;
 
 begin
+    readln(n);   //N 皇后
+   repeat        //直到输入0,表示结束
+    count:=0;
+    fillchar (b1,sizeof(b1),true);
+    fillchar (b2,sizeof(b2),true);
+    fillchar (b3,sizeof(b3),true);
+    search(1);
+    writeln('--------------------------');
+    writeln('i=',i,'  total=',count);
     readln(n);
-    fillchar(a,sizeof(a),0);  //0表示可以放皇后，1表示有皇后，-1表示不能放皇后
-    search(1,n);
-    readln;
+
+   until n=0;
 end.

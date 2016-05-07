@@ -1,0 +1,41 @@
+// 回溯法
+program L5_8;
+var n,k,count:integer;
+    a:array[1..8]of integer;    //划分的每个数
+
+procedure print;
+var i:integer;
+begin
+     for i:=1 to k do
+         write(a[i],' ');
+     writeln;
+     inc(count);
+end;
+
+procedure search(t,s:integer);
+var i:integer;
+begin
+    if t>k then
+    begin
+         if s=0 then
+            print;
+         exit;
+    end;
+    for i:=1 to s do
+    begin
+         if (i>=a[t-1]) then
+         begin
+              a[t]:=i;
+              search(t+1,s-i);
+         end;
+    end;
+end;
+
+begin
+    readln(n,k);
+    count:=0;
+    search(1,n);      //第t个数，剩下n没分
+    writeln('-----------------');
+    writeln('count=',count);
+    readln;
+end.     

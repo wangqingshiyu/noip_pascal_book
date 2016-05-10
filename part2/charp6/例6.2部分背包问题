@@ -1,0 +1,72 @@
+// 未完善
+program L6_2;
+const maxn=100;
+type sz=array[1..maxn] of integer;
+var m,sum:integer;
+    n,i,j:integer;
+    w,v,h,wt,vt:sz;
+
+procedure qs(a:sz;l,r:integer);
+var i,j,mid,p:integer;
+begin
+    i:=l;   j:=r;
+    mid:=a[(l+r) div 2];          //取基准
+    repeat
+          while a[i]< mid do inc(i);  //指针移动
+          while a[j]> mid do dec(j);
+          if i<=j then
+          begin
+               p:=a[i];       // 交换
+               a[i]:=a[j];
+               a[j]:=p;
+                             //指针移动
+               inc(i);
+               dec(j);
+          end;
+    until i>j;
+    if l<j then qs(a,l,j);
+    if i<r then qs(a,i,r);
+end;
+
+begin
+    readln(m,n);
+    for i:=1 to n do   //读入数据
+        readln(w[i],v[i]);
+    for i:=1 to n do
+    begin
+        wt[i]:=w[i];
+        vt[i]:=v[i];
+    end;
+    qs(w,1,n);   // 快排
+    for i:=1 to n do
+    begin
+         write(i,' ',w[i],' ');
+         for j:=1 to n do
+             if w[i]=wt[j] then v[i]:=vt[j];
+         writeln(v[i]);
+    end;
+    i:=1;   //初始化
+    repeat             //装物品
+          if m=0 then break;
+          if (m-w[i]>=0) then
+             begin
+              m:=m-w[i];    //空余的数量
+              h[i]:=w[i];   //装入的数量
+              end
+          else
+              begin
+                   h[i]:= m;  // 装入剩余的数量
+                   m:=0;      // 剩余为0
+              end
+          Inc(i);        // 下一个物品
+    until (m<=0) or (i>n);
+    sum:=0;   i:=i-1;
+    while (i>0) do
+    begin
+         sum:=sum+h[i]*v[i];
+         dec(i);
+    end;
+    writeln('--------------');
+    writeln(sum);
+    readln;
+end.

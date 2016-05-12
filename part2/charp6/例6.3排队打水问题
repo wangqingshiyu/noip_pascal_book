@@ -1,0 +1,48 @@
+// 只有一个水龙头的时候
+program L6_3_1;
+const maxn=100;
+type sz=array[1..maxn]of integer;
+var n,i,j:integer;
+    a,s:sz;
+    sum:longint;
+
+ procedure qs(var b:sz;l,r:integer);
+ var i,j,mid,p:integer;
+ begin
+      i:=l; j:=r;
+      mid:=b[(i+j)div 2];
+      repeat
+          while b[i]<mid do
+                inc(i);
+          while b[j]>mid do
+                dec(j);
+          if i<=j then
+          begin
+               p:=a[i];
+               a[i]:=a[j];
+               a[j]:=p;
+               inc(i);
+               dec(j);
+          end;
+      until i>j;
+      if i<r then qs(b,i,r);
+      if l<j then qs(b,l,j);
+ end;
+
+begin
+     readln(n);
+     for i:=1 to n do
+         read(a[i]);
+     qs(a,1,n);
+     sum:=0;
+     fillchar(s,sizeof(s),0);
+     for i:=1 to n do
+     begin
+         for j:=1 to i do
+             s[i]:=s[i]+a[j];
+         sum:=sum+s[i];
+     end;
+     writeln(sum);
+   // readln;
+   // readln;
+end.

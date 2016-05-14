@@ -1,0 +1,33 @@
+program L6_4;
+const maxn=100;
+var a,b:array[1..maxn] of integer;
+    n,avg,count,i,j:integer;
+    sum:longint;
+
+begin
+     readln(n);
+     for i:=1 to n do
+     begin
+        read(a[i]);
+        sum:=sum+a[i];
+     end;
+     avg:=sum div n;
+     for i:=1 to n do
+         b[i]:=avg-a[i];
+     i:=1;
+     j:=n;
+     count:=0;
+     while (b[i]=0) and (i<n) do inc(i);     //过滤左边的0
+     while (b[j]=0) and (j>1) do dec(j);     //过滤右边的0
+     while (i<j) do
+     begin
+          b[i+1]:=b[i]+b[i+1];
+          b[i]:=0;
+          inc(count);
+          while (a[i+1]=0) and (i<j) do inc(i);    //如果“左右平衡”，中间的0也需要过滤
+          inc(i);
+     end;
+     writeln(count);
+    // readln;
+    // readln;
+end.

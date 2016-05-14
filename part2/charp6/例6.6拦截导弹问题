@@ -1,0 +1,32 @@
+program L6_6;
+const maxn=1000;
+var a:array[1..maxn]of integer;
+    l:array[1..maxn]of integer;
+    i,j,k,n:integer;
+begin
+     readln(n);
+     for i:=1 to n do
+         read(a[i]);
+     l[1]:=a[1];
+     k:=1;
+     for i:=2 to n do
+     begin
+          if a[i]>l[k] then   //均大于所有系统,则需要增加一套系统
+                              //因为其实隐含了增加的那套系统永远是最高的条件，所以只需要比较最大的数值就可以了
+          begin
+               inc(k);
+               l[k]:=a[i];
+          end
+          else begin         //找大于a[i]最小的那套系统
+               for j:=1 to k do
+                   if l[j]>=a[i] then
+                   begin
+                        l[j]:=a[i];
+                        break;
+                   end;
+          end;
+     end;
+     writeln(k);
+    // readln;
+    // readln;
+end.

@@ -1,5 +1,5 @@
 {
-   简单回溯题目：从n个数中取r个数字出来，不同顺序代表不同方法，求所有方法。
+   简单回溯题目：从n个数中取r个数字出来，不同顺序代表不同方法，求所有方法，即求全排列。如{1,2,3}与{1,3,2},{3,2,1}均是不同的。
 }
 program Project1;
 var a:array[1..100]of integer;
@@ -45,4 +45,47 @@ begin
      writeln('totoal: ',count);
     // readln;
     // readln;
+end.
+
+// 分界线---------------------------------------------------------------------------
+{
+从n个数中取r个数字出来，构成组合。即{1,2,3}和{3,2,1}是同一方法。
+}
+program qpl;
+const maxn=20;
+var i,k,n,count:integer;
+    a,c:array[1..maxn]of integer;
+    b:array[1..maxn]of boolean;
+
+procedure search(t,p:integer); //t表示第几个数，p表示当前的位置
+var i:integer;
+begin
+     if t>k then
+     begin
+         for i:=1 to k do
+             write(c[i],' ');
+         writeln();
+         inc(count);
+         exit;
+     end;
+     for i:=p to n do
+     begin
+          if b[i] then
+          begin
+              c[t]:=a[i];
+              b[i]:=false;
+              search(t+1,i+1);
+              b[i]:=true;
+          end;
+     end;
+end;
+
+begin
+     readln(n,k);
+     for i:=1 to n do
+         read(a[i]);
+     fillchar(b,sizeof(b),true);
+     count:=0;
+     search(1,1);
+     writeln(count);
 end.

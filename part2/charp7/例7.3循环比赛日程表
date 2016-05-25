@@ -1,0 +1,44 @@
+program P7_3;
+const maxn=1000;
+var m,i,j,len,k:longint;
+    n:longint;
+    a:array[0..maxn,0..maxn]of longint;
+
+
+begin
+     readln(m);
+     n:=1;
+     for i:=1 to m do
+         n:=n*2;
+     k:=0;      //k表示放大次数
+     a[1,1]:=1;
+     len:=1;
+     while (k<m) do  // 要放大m-1次
+     begin
+          for i:=1 to len do        //右上部分
+              for j:=1 to len do
+              begin
+                   a[i,j+len]:=a[i,j]+len;
+              end;
+          for i:=1 to len do       //左下部分=右上部分
+              for j:=1 to len do
+              begin
+                  a[i+len,j]:=a[i,j+len];
+              end;
+          for i:=1 to len do       //右下部分=左上部分
+              for j:=1 to len do
+              begin
+                   a[i+len,j+len]:=a[i,j];
+              end;
+          inc(k);
+          len:=2*len; //放大一次后，宽度变成两倍
+     end;
+
+     for i:=1 to n do
+     begin
+          for j:=1 to n do
+              write(a[i,j]:4);
+          writeln;
+     end;
+   //  readln;
+end.

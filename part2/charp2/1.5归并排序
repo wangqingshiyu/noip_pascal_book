@@ -1,0 +1,55 @@
+program mergesort;
+const maxn=1000;
+var a,s:array[1..maxn]of integer;
+    n,i:integer;
+
+procedure mergesort(l,r:integer);    //从小到大排序
+var i,j,k,m:integer;
+begin
+    if l=r then exit;  //只有一个数据
+    m:=(l+r)div 2;
+    mergesort(l,m);
+    mergesort(m+1,r);
+    i:=l;       //指针的初始化
+    j:=m+1;
+    k:=l;
+    while (i<=m) and (j<=r) do   //两个序列都还没有排列完
+    begin
+         if a[i]<=a[j] then
+            begin
+            s[k]:=a[i];
+            inc(k);
+            inc(i);
+            end
+         else begin
+              s[k]:=a[j];
+              inc(k);
+              inc(j);
+         end;
+    end;
+    while i<=m do
+    begin
+         s[k]:=a[i];
+         inc(k);
+         inc(i);
+    end;
+    while j<=r do
+    begin
+         s[k]:=a[j];
+         inc(k);
+         inc(j);
+    end;
+    for i:=l to r do
+        a[i]:=s[i];
+end;
+
+begin
+    readln(n);
+    for i:=1 to n do
+        read(a[i]);
+    mergesort(1,n);
+    for i:=1 to n do
+        write(a[i],' ');
+    //readln;
+    //readln;
+end.

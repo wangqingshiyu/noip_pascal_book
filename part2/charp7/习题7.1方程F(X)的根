@@ -1,0 +1,39 @@
+program p7_1;
+const BJ=1e-11;
+var x1,x2,m,d:extended;
+
+function f(t:extended):extended;
+begin
+     f:=exp(t*ln(2))+exp(t*ln(3))-exp(t*ln(4));
+end;
+
+begin
+     readln(x1,x2);
+     d:=x2-x1;
+     if f(x1)=0 then writeln(x1:0:10)
+     else if f(x2)=0 then writeln(x2:0:10)
+          else
+              begin
+                   if f(x1)*f(x2)>0 then writeln('No answer')
+                   else
+                   begin
+                       while d>BJ do
+                       begin
+                            m:=(x1+x2)/2;
+                            if f(m)=0 then
+                            begin
+                                 writeln(m:0:10);
+                                 exit;
+                            end;
+                            if f(x1)*f(m)<0 then
+                                 x2:=m
+                            else x1:=m;
+                            d:=x2-x1;
+                       end;
+                       writeln('x1=',x1:0:11);
+                       writeln('m =',m:0:11);
+                       writeln('x2=',x2:0:11)
+                   end;
+              end;
+     //readln;
+end.

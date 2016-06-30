@@ -1,0 +1,18 @@
+program ex5_1;
+const maxn=1000;
+var
+    a:array[1..maxn]of char;
+    count:array['a'..'z']of integer;
+    c,i:char;
+begin
+    fillchar(count,sizeof(count),0);       //初始化所有的统计
+    repeat
+          read(c);
+          if (c>='A') and (c<='Z') then    //大写转小写
+             c:=chr(ord(c)+(ord('a')-ord('A')));
+          inc(count[c]);
+    until c='?';
+    for i:='a' to 'z' do
+        if count[i]>0 then            //有数据在才输出
+           writeln(i,':',count[i]);
+end.

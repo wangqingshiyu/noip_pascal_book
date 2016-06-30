@@ -1,0 +1,19 @@
+program ex5_5;
+const maxn=1000000;
+var
+    n,m,i,j:longint;
+    a:array[0..maxn]of boolean;
+begin
+    readln(n);    //宾馆的房间数
+    readln(m);    //服务员的人数
+    fillchar(a,sizeof(a),false); //初始化都是关的
+    for i:=1 to m do    //m次处理
+    begin
+         for j:=1 to n do
+             if j mod i=0 then
+                a[j]:=not a[j];
+    end;
+    write('Open num:') ;       //输出打开状态的房号
+    for i:=1 to n do
+        if a[i] then write(i,' ');
+end.

@@ -1,0 +1,24 @@
+program ex5_6;
+const maxn=10000;
+var a:array[0..maxn]of boolean;
+    m,n,k,t,count:integer;
+
+begin
+     readln(n,m);   //总共n人，数到m出列
+     fillchar(a,sizeof(a),false); // false表示还没出列
+     k:=0;          //用来数数，判断是否出列
+     t:=0;          //表示第t个数
+     count:=0;      //出列人数
+     repeat
+         inc(t);    //下一个人；
+         if t=n+1 then t:=1;   //又从头开始
+         if a[t]=false then inc(k); //未出列的才计算
+         if k=m then                //计算的数等于M,及符合条件，第t人出列
+         begin
+              a[t]:=true;        //标记第t人已经出列
+              write(t,' ');
+              inc(count);        //出列人数加1
+              k:=0;              //重新数数
+         end;
+     until count=n;            // 当所有人都出列了，结束
+end.

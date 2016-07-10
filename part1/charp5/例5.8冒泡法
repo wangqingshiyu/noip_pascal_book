@@ -1,0 +1,23 @@
+program ex5_8;//冒泡法，从小到大
+const maxn=10000;
+var i,j,n:integer;
+    a:array[0..maxn]of longint;
+begin
+    readln(n);
+    for i:=1 to n do
+        read(a[i]);
+    for i:=1 to n-1 do
+        for j:=1 to n-i do
+        begin
+            if a[j]>a[j+1] then
+            begin
+                a[0]:=a[j];
+                a[j]:=a[j+1];
+                a[j+1]:=a[0];
+            end;
+        end;
+    for i:=1 to n do
+        write(a[i],' ');
+    readln;
+    readln;
+end.

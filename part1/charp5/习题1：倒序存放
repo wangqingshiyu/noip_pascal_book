@@ -1,0 +1,19 @@
+program p5_1;
+const maxn=10000;
+var i,n:integer;
+    a:array[0..maxn]of integer;
+begin
+    readln(n);
+    for i:=1 to n do
+        a[i]:=i;
+    for i:=1 to n div 2 do
+    begin
+         a[0]:=a[i];
+         a[i]:=a[n+1-i];
+         a[n+1-i]:=a[0];
+    end;
+    for i:=1 to n do
+        write(a[i],' ');
+    readln;
+    readln;
+end.

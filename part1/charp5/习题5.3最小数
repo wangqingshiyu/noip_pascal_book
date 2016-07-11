@@ -1,0 +1,23 @@
+program p5_2;
+const maxn=1000;
+var i,n,k:integer;
+    a:array[1..maxn]of longint;
+    min,t:longint;
+begin
+     readln(n);
+     for i:=1 to n do
+         read(a[i]);
+     min:=a[1];
+     for i:=2 to n do
+         if a[i]< min then
+         begin
+            min:=a[i];
+            k:=i;  //标记位置
+         end;
+     a[k]:=a[1];
+     a[1]:=min;
+     for i:=1 to n do
+         write(a[i],' ');
+     readln;
+     readln;
+end.

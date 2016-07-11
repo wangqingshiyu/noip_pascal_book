@@ -1,0 +1,15 @@
+program p5_2;
+var i,j:integer;
+    b:array[0..52]of boolean;
+begin
+     fillchar(b,sizeof(b),true); //true表示正面
+     for i:=2 to 52 do
+         for j:=i to 52  do
+         begin
+              if j mod i=0 then
+                 b[j]:=not b[j];
+         end;
+     for i:=1 to 52 do
+         if b[i] then
+            write(i,' ');
+end. 
